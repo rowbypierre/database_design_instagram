@@ -1,0 +1,99 @@
+Do not copy
+Begin
+
+Steps to recreate entity relationship diagram:
+  1. Navigate to https://dbdiagram.io/home/
+  2. Select "Create your diagram"
+  3. Copy text below
+  4. Past text below in web text editor
+
+End
+
+table books {
+  id serial [pk, increment]
+  title nvarchar(120)
+  author_id integer [ref: > authors.id]
+  genre_id integer [ref: > genres.id]
+  ISBN varchar(15)
+  status_id integer [ref: > status.id]
+  condition_id integer [ref: > conditions.id]
+  created timestamp
+  modified timestamp
+}
+
+table authors{
+  id serial [pk, increment]
+  fname varchar(30)
+  lname varchar(30)
+}
+
+table status {
+  id serial [pk, increment]
+  status varchar(30)
+}
+
+table genres {
+  id serial [pk, increment]
+  genre varchar(30)
+}
+
+table conditions {
+  id serial [pk, increment]
+  condition varchar(30)
+}
+
+table patrons {
+  id serial [pk, increment]
+  fname varchar(30)
+  lname varchar(30)
+  address nvarchar(90)
+  zip integer
+  phone nvarchar(15)
+  email nvarchar(30)
+  created timestamp
+  modified timestamp
+}
+
+table loans {
+  id serial [pk, increment]
+  book_id integer [ref: > books.id]
+  patron_id integer [ref: > patrons.id]
+  due date
+  renewals integer
+  staff_id integer [ref: > staff.id]
+  created timestamp
+  modified timestamp
+  checkout_id integer [ref: > checkouts.id]
+  return_id integer [ref: > returns.id]
+}
+
+table returns {
+  id serial [pk, increment]
+  date timestamp
+  comment varchar(240)
+  overdue boolean
+  fine numeric
+  staff_id integer [ref: > staff.id]
+  created timestamp
+  modified timestamp
+}
+
+table checkouts {
+  id serial [pk, increment]
+  date timestamp
+  comment varchar(240)
+  staff_id integer [ref: > staff.id]
+  created timestamp
+  modified timestamp
+}
+
+table staff {
+  id serial [pk, increment]
+  fname varchar(30)
+  lname varchar(30)
+  active boolean
+  hire  date
+  role  varchar(30)
+  created timestamp
+  modified timestamp
+}
