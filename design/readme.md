@@ -8,6 +8,7 @@ The schema comprises several interconnected tables that reflect real-world relat
 
 - `books`: Stores details about books such as title, author, genre, ISBN, and the book's current condition and status.
 - `authors`: Contains information on authors including first and last names.
+- `book_authors`: A junction table that establishes a many-to-many relationship between `books` and `authors`.
 - `genres`: Lists different genres that books can be categorized into.
 - `patrons`: Holds patron information, including contact details and unique identifiers.
 - `loans`: Manages the borrowing details for each book, including which patron has borrowed it and the due dates.
@@ -20,7 +21,7 @@ The schema comprises several interconnected tables that reflect real-world relat
 The schema is designed with relationships that allow for comprehensive data analysis and reporting:
 - Books are linked to authors and genres for easy categorization.
 - Loans and returns are tied to patrons and books to track the borrowing lifecycle.
-- Staff actions are recorded in relation to checkouts and returns to monitor activity and performance.
+- Staff actions are recorded in relation to checkouts, returns, books, patrons, loans, and staff records to monitor activity and performance.
 
 ## Technical Specifications
 The database utilizes: 
