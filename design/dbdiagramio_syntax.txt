@@ -1,4 +1,4 @@
-Do not copy
+Do not copy:
 Begin
 
 Steps to recreate entity relationship diagram:
@@ -9,6 +9,7 @@ Steps to recreate entity relationship diagram:
 
 End
 
+Copy below:
 table books {
   id serial [pk, increment]
   title nvarchar(120)
