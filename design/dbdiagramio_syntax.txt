@@ -13,19 +13,25 @@ Copy below:
 table books {
   id serial [pk, increment]
   title nvarchar(120)
-  author_id integer [ref: > authors.id]
   genre_id integer [ref: > genres.id]
   ISBN varchar(15)
   status_id integer [ref: > status.id]
   condition_id integer [ref: > conditions.id]
+  created_staff_id integer [ref: > staff.id]
   created timestamp
+  modified_staff_id integer [ref: > staff.id]
   modified timestamp
 }
 
-table authors{
+table authors {
   id serial [pk, increment]
   fname varchar(30)
   lname varchar(30)
+}
+
+table book_authors {
+  book_id integer [pk, ref: > books.id]
+  author_id integer [pk, ref: > authors.id]
 }
 
 table status {
@@ -49,10 +55,13 @@ table patrons {
   lname varchar(30)
   address nvarchar(90)
   zip integer
+  state varchar(2)
   phone nvarchar(15)
   email nvarchar(30)
   created timestamp
+  created_staff_id integer [ref: > staff.id]
   modified timestamp
+  modified_staff_id integer [ref: > staff.id]
 }
 
 table loans {
@@ -61,11 +70,12 @@ table loans {
   patron_id integer [ref: > patrons.id]
   due date
   renewals integer
-  staff_id integer [ref: > staff.id]
-  created timestamp
-  modified timestamp
   checkout_id integer [ref: > checkouts.id]
   return_id integer [ref: > returns.id]
+  created_staff_id integer [ref: > staff.id]
+  created timestamp
+  modified_staff_id integer [ref: > staff.id]
+  modified timestamp
 }
 
 table returns {
@@ -74,8 +84,9 @@ table returns {
   comment varchar(240)
   overdue boolean
   fine numeric
-  staff_id integer [ref: > staff.id]
+  created_staff_id integer [ref: > staff.id]
   created timestamp
+  modified_staff_id integer [ref: > staff.id]
   modified timestamp
 }
 
@@ -83,8 +94,9 @@ table checkouts {
   id serial [pk, increment]
   date timestamp
   comment varchar(240)
-  staff_id integer [ref: > staff.id]
+  created_staff_id integer [ref: > staff.id]
   created timestamp
+  modified_staff_id integer [ref: > staff.id]
   modified timestamp
 }
 
@@ -95,6 +107,8 @@ table staff {
   active boolean
   hire  date
   role  varchar(30)
+  created_staff_id integer [ref: > staff.id]
   created timestamp
+  modified_staff_id integer [ref: > staff.id]
   modified timestamp
 }
