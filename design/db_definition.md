@@ -18,6 +18,8 @@
 - `id`: Author unique identifier.
 - `fname`: Author's first name.
 - `lname`: Author's last name.
+- `mi`: Author's middle initials.
+- `dob`: Author's date of birth.
 
 ## Table: `book_authors`
 - `book_id`: Foreign key reference to `books.id`.

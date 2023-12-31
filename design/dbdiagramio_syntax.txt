@@ -27,6 +27,8 @@ table authors {
   id serial [pk, increment]
   fname varchar(30)
   lname varchar(30)
+  mi varchar(10)
+  dob date
 }
 
 table book_authors {
