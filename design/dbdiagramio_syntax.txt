@@ -82,7 +82,7 @@ table loans {
 
 table returns {
   id serial [pk, increment]
-  date timestamp
+  date date
   comment varchar(240)
   overdue boolean
   fine numeric
@@ -94,7 +94,7 @@ table returns {
 
 table checkouts {
   id serial [pk, increment]
-  date timestamp
+  date date
   comment varchar(240)
   created_staff_id integer [ref: > staff.id]
   created timestamp
@@ -106,11 +106,17 @@ table staff {
   id serial [pk, increment]
   fname varchar(30)
   lname varchar(30)
+  dob date
   active boolean
   hire  date
-  role  varchar(30)
+  role_id integer [ref: > roles.id]
   created_staff_id integer [ref: > staff.id]
   created timestamp
   modified_staff_id integer [ref: > staff.id]
   modified timestamp
+}
+
+table roles {
+  id serial [pk, increment]
+  role varchar(30)
 }

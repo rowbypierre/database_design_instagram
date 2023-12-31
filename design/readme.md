@@ -15,6 +15,7 @@ The schema comprises several interconnected tables that reflect real-world relat
 - `returns`: Tracks the return of books, including any overdue fines.
 - `checkouts`: Records when a book is checked out, including the staff member who facilitated it.
 - `staff`: Details about library staff, including their roles and the dates they were hired.
+- `roles`: Details the role titles for a given id.
 - `status` and `conditions`: Enumerate the possible states of books in terms of availability and physical condition.
 
 ## Relationships
@@ -28,7 +29,7 @@ The database utilizes:
 - `serial` IDs for uniqueness
 - `varchar` for text fields
 - `integer` for numerical values
-- `timestamp` for date and time records
+- `timestamp` or `date` for date and time records
 - `boolean` for true/false conditions
 - `numeric` for financial values like fines
 

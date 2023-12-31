@@ -88,10 +88,15 @@
 - `id`: Staff unique identifier.
 - `fname`: Staff member's first name.
 - `lname`: Staff member's last name.
+- `dob`: Staff member's date of birth
 - `active`: Whether the staff member is currently employed.
 - `hire`: Date the staff member was hired.
-- `role`: Role of the staff member within the library.
+- `role_id`: Foreign key reference to `roles.id`.
 - `created_staff_id`: Foreign key reference to `staff.id`.
 - `created`: Timestamp of when the book entry was created.
 - `modified_staff_id`: Foreign key reference to `staff.id`.
 - `modified`: Timestamp of when the book entry was last modified.
+
+## Table: `roles`
+- `id`: Role unique identifier.
+- `role`: Role title.
