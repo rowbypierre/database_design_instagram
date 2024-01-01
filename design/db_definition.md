@@ -25,7 +25,7 @@
 - `book_id`: Foreign key reference to `books.id`.
 - `author_id`: Foreign key reference to `authors.id`.
 
-## Table: `status`
+## Table: `statuses`
 - `id`: Status unique identifier.
 - `status`: Description of the book's status (e.g., available).
 
