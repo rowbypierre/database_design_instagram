@@ -15,7 +15,7 @@ table books {
   title nvarchar(120)
   genre_id integer [ref: > genres.id]
   ISBN varchar(15)
-  status_id integer [ref: > status.id]
+  status_id integer [ref: > statuses.id]
   condition_id integer [ref: > conditions.id]
   created_staff_id integer [ref: > staff.id]
   created timestamp
@@ -36,7 +36,7 @@ table book_authors {
   author_id integer [pk, ref: > authors.id]
 }
 
-table status {
+table statuses {
   id serial [pk, increment]
   status varchar(30)
 }
@@ -55,8 +55,9 @@ table patrons {
   id serial [pk, increment]
   fname varchar(30)
   lname varchar(30)
+  dob date
   address nvarchar(90)
-  zip integer
+  zip varchar(15)
   state varchar(2)
   phone nvarchar(15)
   email nvarchar(30)

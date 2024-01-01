@@ -41,6 +41,7 @@
 - `id`: Patron unique identifier.
 - `fname`: Patron's first name.
 - `lname`: Patron's last name.
+- `dob`: Patron's date of birth.
 - `address`: Patron's address.
 - `zip`: Patron's ZIP code.
 - `state`: Patron's State of residence.

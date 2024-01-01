@@ -16,7 +16,7 @@ The schema comprises several interconnected tables that reflect real-world relat
 - `checkouts`: Records when a book is checked out, including the staff member who facilitated it.
 - `staff`: Details about library staff, including their roles and the dates they were hired.
 - `roles`: Details the role titles for a given id.
-- `status` and `conditions`: Enumerate the possible states of books in terms of availability and physical condition.
+- `statuses` and `conditions`: Enumerate the possible states of books in terms of availability and physical condition.
 
 ## Relationships
 The schema is designed with relationships that allow for comprehensive data analysis and reporting:
@@ -28,7 +28,7 @@ The schema is designed with relationships that allow for comprehensive data anal
 The database utilizes: 
 - `serial` IDs for uniqueness
 - `varchar` for text fields
-- `integer` for numerical values
+- `smallint` for numerical values
 - `timestamp` or `date` for date and time records
 - `boolean` for true/false conditions
 - `numeric` for financial values like fines
