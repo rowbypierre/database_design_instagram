@@ -74,8 +74,6 @@ insert into books (title, genre_id, ISBN, status_id, condition_id, created_staff
 ('Cultures of the Amazon', 20, '9780312428399', 9, 4, 113, 113),
 ('Exploring the Deep Sea', 12, '9780575070888', 10, 5, 114, 114);
 
-
-
 -- authors tables
 create table authors (
 	id serial primary key,
@@ -380,7 +378,6 @@ insert into loans (book_id, patron_id, due, checkout_id, return_id, created_staf
 (98, 22, '2024-02-07', 19, 19, 113),
 (99, 23, '2024-02-09', 20, 20, 114);
 
-
 -- returns table
 create table returns (
 	id serial primary key,
@@ -540,7 +537,6 @@ insert into staff (fname, lname, active, dob, hire, role_id, created_staff_id, m
 ('Rachel', 'Brooks', FALSE, '1977-09-14', '2002-10-21', 3, 1, 1),
 ('Simon', 'Kennedy', FALSE, '1988-08-08', '2013-09-09', 2, 1, 1),
 ('Tina', 'Ward', FALSE, '1991-12-25', '2016-11-30', 1, 1, 1);
-
 
 -- roles table
 create table roles (
