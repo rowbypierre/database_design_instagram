@@ -178,16 +178,17 @@ This document describes the database schema for the Library Management System. T
   - At least one of `phone` or `email` must be provided, and if provided, they must meet certain format requirements.
     ```sql
     unique (fname, lname, address, dob),
-    check (
-        dob <= current_date - interval '14 year' 
-        and ((address is not null and length(zip) >= 5 and state is not null)
-            or (address is null and zip is null and state is null))	
-        and (modified is null or created <= modified)
-        and (coalesce((phone)::boolean::integer,0) + 
-            coalesce((email)::boolean::integer,0)) >= 1
-        and (phone is null or length(phone) >= 10)
-        and (email is null or email like '%@%')
-    )
+      check (
+			  dob <= current_date - interval '14 year' 
+			  and ((address is not null and length(zip) >= 5 and state is not null)
+				  or (address is null and zip is null and state is null))	
+			  and (modified is null or created <= modified)
+			  -- and (coalesce((phone)::boolean::integer,0) + 
+				  -- coalesce((email)::boolean::integer,0)) >= 1
+			  and (phone is null or length(phone) >= 10)
+			  and (email is null or email like '%@%')
+	    )
+    );
     ```
 
 #### `loans`
