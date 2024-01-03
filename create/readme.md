@@ -362,28 +362,28 @@ This document describes the database schema for the Library Management System. T
     ```
 - **Foreign Keys**:
   - `role_id` references `roles(id)`.
-  - `created_staff_id` and `modified_staff_id` self-reference `staff(id)`.
     ```sql
     foreign key (role_id)
         references roles(id),
-    foreign key (created_staff_id)
-        references staff(id),
-    foreign key (modified_staff_id)
-        references staff(id),
     ```
 - **Constraints**:
   - Combination of `fname`, `lname`, `dob`, and `role_id` must be unique.
   - `dob` must be at least 16 years before the current date.
   - `hire` date must be after the `dob` and not before January 1, 2000.
   - `modified` timestamp should not be earlier than `created` timestamp.
+  - `created_staff_id` and `modified_staff_id` self-reference `staff(id)`.
     ```sql
     unique (fname, lname, dob, role_id),
     check (
-        dob <= current_date - interval '16 year'
-        and hire > dob 
-        and hire > '2000-01-01'
-        and (modified is null or created <= modified)
-    )
+			dob <= current_date - interval '16 year'
+			and hire > dob 
+			and hire > '2000-01-01'
+			and (modified is null or 
+				 (created <= modified
+				 and modified_staff_id in (select id from staff))
+			and created_staff_id in (select id from staff))
+	)
+);
     ```
 
 #### `roles`
