@@ -401,30 +401,6 @@ This document describes the database schema for the Library Management System. T
   - `role` must be unique and not null, ensuring each role is distinct.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Notes
 
 This schema is designed to ensure data integrity and consistency across the library management system, with an emphasis on robust relationships between different entities such as books, authors, patrons, and staff.
