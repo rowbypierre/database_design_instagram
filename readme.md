@@ -17,6 +17,9 @@
 ### Create Directory Overview
 
 - **Content**: Outlines the creation of the library database, including tables for books, authors, loans, and more.
+    - Create schema and table statements
+    - Insert records statements
+    - Documentation for all keys and database level constraints.     
 - **Tables**: 
   - `books`: Stores book details, linked to genres, statuses, conditions. Ensures ISBN length and modification dates.
   - `authors`: Contains author information, ensuring unique author identities.
