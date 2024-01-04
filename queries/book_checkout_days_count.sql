@@ -1,4 +1,4 @@
--- number of days a book has been checked
+-- number of days a book has been checked out
 with x as (
 	select		*,
 				case when r.date is not null 

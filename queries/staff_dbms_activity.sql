@@ -23,4 +23,4 @@ select 		concat(s.fname, ' ', s.lname) "Name", count("Record Type") "Count"
 from		x
 			join staff s on s.id = x."ID" 
 group by 	"Name"
-order by 	"Name"
+order by 	"Name";
