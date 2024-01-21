@@ -36,7 +36,7 @@ Displays details of available books and their authors, ordered by book title.
 
 ### Select Clause
 - Selects `title` from `books` table and renames it as `"Book Title"`.
-- Selects `fname`, `lname`, and `mi` from `authors` table and renames them as `"Author First Name"`, `"Author Last Name"`, and `"Author MI"`, respectively.
+- Concatenates `fname`, `mi`, and `lname` from `authors` table and renames the result as `"Full Name"`.
 
 ### From Clause
 - The main table is `book_authors` (aliased as `ba`).
@@ -49,21 +49,34 @@ Displays details of available books and their authors, ordered by book title.
 ### Where Clause
 - Filters the results to include only books with `status` marked as `'Available'`.
 
+### Group By Clause
+- Groups results by `"Full Name"` and `"Book Title"`.
+
 ### Order By Clause
-- Orders results by `title`, `fname`, and `lname`.
+- Orders results by `"Book Title"`.
+
+### Aggregation
+- Uses the `string_agg` function to aggregate `"Full Name"` values per `"Book Title"` into a single field named `Author`.
 
 ```sql
-select 		--*,
-			title as "Book Title",
-			fname as "Author First Name",
-			lname as "Author Last Name",
-			mi as "Author MI"
-from 		book_authors  ba
-			left join authors a on ba.author_id = a.id
-			left join books b on ba.book_id = b.id 
-			left join statuses s on b.status_id = s.id
-where 		status in ('Available')
-order by 	title, fname, lname;
+with x as (
+    select      --*,
+                title as "Book Title",
+                concat(fname,' ', mi, '. ', lname) as "Full Name"
+    from        book_authors  ba
+                left join authors a on ba.author_id = a.id
+                left join books b on ba.book_id = b.id 
+                left join statuses s on b.status_id = s.id
+    where       status in ('Available')
+    group by    "Full Name", "Book Title"
+    order by    "Book Title"
+)
+
+select          x."Book Title",
+                string_agg("Full Name", ', ') as Author          
+from            x 
+group by        x."Book Title"
+order by        x."Book Title"
 ```
 
 ## List of Books Never Loaned Out
