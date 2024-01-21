@@ -1,35 +1,42 @@
 -- general overview of library's book collection
 select 		--*,
-			title "Title", isbn "ISBN", genre "Genre", condition "Condition"
+		title "Title", isbn "ISBN", genre "Genre", condition "Condition"
 from		books b
-			left join genres g on g.id = b.genre_id 
-			left join conditions c on c.id = b.condition_id
-			left join statuses s on s.id = b.status_id
+		left join genres g on g.id = b.genre_id 
+		left join conditions c on c.id = b.condition_id
+		left join statuses s on s.id = b.status_id
 order by	Genre, Title;
 
 -- list of available books and author information
-select 		--*,
+with x as (
+	select 		--*,
 			title as "Book Title",
-			fname as "Author First Name",
-			lname as "Author Last Name",
-			mi as "Author MI"
-from 		book_authors  ba
+			concat(fname,' ', mi, '. ', lname) as "Full Name"
+	from 		book_authors  ba
 			left join authors a on ba.author_id = a.id
 			left join books b on ba.book_id = b.id 
 			left join statuses s on b.status_id = s.id
-where 		status in ('Available')
-order by 	title, fname, lname;
+	where 		status in ('Available')
+	group by 	"Full Name", "Book Title"
+	order by 	"Book Title"
+)
 
+select		x."Book Title",
+		string_agg("Full Name", ', ') as Author			
+from 		x 
+group by 	x."Book Title"
+order by 	x."Book Title";
+	
 -- list of books to have never been loaned out
 select 		--*,
-			title as "Book Title",
-			fname as "Author First Name",
-			lname as "Author Last Name",
-			mi as "Author MI"
+		title as "Book Title",
+		fname as "Author First Name",
+		lname as "Author Last Name",
+		mi as "Author MI"
 from 		book_authors  ba
-			left join authors a on ba.author_id = a.id
-			left join books b on ba.book_id = b.id 
-			left join statuses s on b.status_id = s.id
+		left join authors a on ba.author_id = a.id
+		left join books b on ba.book_id = b.id 
+		left join statuses s on b.status_id = s.id
 where 		b.id not in (select book_id from loans)
 order by 	title, fname, lname;
 
@@ -42,15 +49,15 @@ from		books b
 group by 	condition
 order by	"Count" desc, condition;
 
--- number of days a book has been checked out for
+-- number of days a book has been checked out
 with x as (
 	select		*,
-				case when r.date is not null 
-					then r.date 
+				case 
+					when r.date is not null then r.date 
 					else current_date 
 				end as "Return Date",
-				case when c.date is not null 
-					then c.date
+				case 
+					when c.date is not null then c.date
 					else current_date
 				end as "Checkout Date"
 	from		books b
@@ -60,24 +67,24 @@ with x as (
 ) 
 
 select 		title "Book Title",
-			("Return Date" - "Checkout Date") as "Days Loaned" 
+		("Return Date" - "Checkout Date") as "Days Loaned" 
 from		x
 order by	"Days Loaned" desc;
 			
--- overdue returns
+-- overdue returns 
 with x as ( 
 	select 	concat(p.fname, ' ', p.lname) as "Patron",
-			b.title "Book",
-			c.date "Checkout",
-			l.due "Due",
-			r.date "Returned",
-			(r.date - l.due) "Days Overdue",
-			concat('$',r.fine) "Fine"
+		b.title "Book",
+		c.date "Checkout",
+		l.due "Due",
+		r.date "Returned",
+		(r.date - l.due) "Days Overdue",
+		concat('$',r.fine) "Fine"
 	from 	loans l
-			join checkouts c on c.id = l.checkout_id
-			join returns r on r.id = l.return_id
-			join books b on b.id = l.book_id
-			join patrons p on p.id = l. patron_id
+		join checkouts c on c.id = l.checkout_id
+		join returns r on r.id = l.return_id
+		join books b on b.id = l.book_id
+		join patrons p on p.id = l. patron_id
 )
 
 select 		* 
@@ -85,18 +92,18 @@ from 		x
 where 		"Days Overdue" > 0
 order by	"Days Overdue" desc;
 
--- average number fines by book genre
+-- average cost of fines by book genre
 with x as ( 
 	select 	*,
-			(r.date - l.due) "Days Overdue"
+		(r.date - l.due) "Days Overdue"
 	from 	loans l
-			join returns r on r.id = l.return_id
-			join books b on b.id = l.book_id
-			join genres g on g.id = b.genre_id
+		join returns r on r.id = l.return_id
+		join books b on b.id = l.book_id
+		join genres g on g.id = b.genre_id
 )
 
 select 		genre "Genre",
-			concat('$', round(avg (fine), 2)) "Fine (AVG)"
+		concat('$', round(avg (fine), 2)) "Fine (AVG)"
 from 		x 
 where 		"Days Overdue" > 0
 group by	"Genre"
