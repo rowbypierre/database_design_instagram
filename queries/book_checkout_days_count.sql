@@ -1,12 +1,12 @@
 -- number of days a book has been checked out
 with x as (
 	select		*,
-				case when r.date is not null 
-					then r.date 
+				case 
+					when r.date is not null then r.date 
 					else current_date 
 				end as "Return Date",
-				case when c.date is not null 
-					then c.date
+				case 
+					when c.date is not null then c.date
 					else current_date
 				end as "Checkout Date"
 	from		books b
@@ -16,6 +16,6 @@ with x as (
 ) 
 
 select 		title "Book Title",
-			("Return Date" - "Checkout Date") as "Days Loaned" 
+		("Return Date" - "Checkout Date") as "Days Loaned" 
 from		x
 order by	"Days Loaned" desc;
