@@ -41,7 +41,7 @@
 
 #### Available Books and Author Information
 - **Purpose**: Identifies available books with author details.
-- **SQL Features**: Involves `LEFT JOIN`, `WHERE` filter, `ORDER BY`.
+- **SQL Features**: Involves `CONCAT`, `String_agg`, `Common Table Expressions`, `LEFT JOIN`, `WHERE` filter, `ORDER BY`.
 
 #### Books Never Loaned Out
 - **Purpose**: Pinpoints books never loaned.
