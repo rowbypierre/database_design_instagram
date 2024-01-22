@@ -84,7 +84,7 @@ Displays books from the library's collection that have never been loaned out, so
 
 ### Select Clause
 - Selects `title` from `books` table, renamed as `"Book Title"`.
-- Selects `fname`, `lname`, `mi` from `authors` table, renamed as `"Author First Name"`, `"Author Last Name"`, `"Author MI"`.
+- Selects `fname`, `lname`, `mi` from `authors` table, renamed as `"Author TItle"`.
 
 ### From Clause
 - Main table is `book_authors` (aliased as `ba`).
@@ -98,20 +98,26 @@ Displays books from the library's collection that have never been loaned out, so
 - Excludes books that have been loaned out (`b.id not in (select book_id from loans)`).
 
 ### Order By Clause
-- Results ordered by `title`, `fname`, `lname`.
+- Results ordered by `Book Title`.
 
 ```sql
-select 		--*,
-			title as "Book Title",
-			fname as "Author First Name",
-			lname as "Author Last Name",
-			mi as "Author MI"
-from 		book_authors  ba
-			left join authors a on ba.author_id = a.id
-			left join books b on ba.book_id = b.id 
-			left join statuses s on b.status_id = s.id
-where 		b.id not in (select book_id from loans)
-order by 	title, fname, lname;
+with x as (
+	select 		--*,
+				title as "Book Title",
+				concat(fname,' ', mi, '. ', lname) as "Full Name"
+	from 		book_authors  ba
+				left join authors a on ba.author_id = a.id
+				left join books b on ba.book_id = b.id 
+				left join statuses s on b.status_id = s.id
+	where 		b.id not in (select book_id from loans)
+	order by 	"Book Title"
+)
+
+select		x."Book Title",
+			string_agg("Full Name", ', ') as Author			
+from 		x 
+group by 	x."Book Title"
+order by 	x."Book Title"
 ```
 
 ## Average Condition of All Books in Collection
