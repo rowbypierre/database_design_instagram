@@ -28,17 +28,23 @@ group by 	x."Book Title"
 order by 	x."Book Title";
 	
 -- list of books to have never been loaned out
-select 		--*,
-		title as "Book Title",
-		fname as "Author First Name",
-		lname as "Author Last Name",
-		mi as "Author MI"
-from 		book_authors  ba
-		left join authors a on ba.author_id = a.id
-		left join books b on ba.book_id = b.id 
-		left join statuses s on b.status_id = s.id
-where 		b.id not in (select book_id from loans)
-order by 	title, fname, lname;
+with x as (
+	select 		--*,
+				title as "Book Title",
+				concat(fname,' ', mi, '. ', lname) as "Full Name"
+	from 		book_authors  ba
+				left join authors a on ba.author_id = a.id
+				left join books b on ba.book_id = b.id 
+				left join statuses s on b.status_id = s.id
+	where 		b.id not in (select book_id from loans)
+	order by 	"Book Title"
+)
+
+select		x."Book Title",
+			string_agg("Full Name", ', ') as Author			
+from 		x 
+group by 	x."Book Title"
+order by 	x."Book Title"
 
 -- average condition of all books in collection
 select 		condition "Condition",
