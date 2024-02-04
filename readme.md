@@ -67,7 +67,7 @@
 - **Purpose**: Counts records created by staff.
 - **SQL Features**: Uses `UNION`, `GROUP BY`, `COUNT`, `Common Table Expressions`, .
 
---
+---
 
 ### Resultsets Directory Overview
 
