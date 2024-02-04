@@ -67,3 +67,7 @@
 - **Purpose**: Counts records created by staff.
 - **SQL Features**: Uses `UNION`, `GROUP BY`, `COUNT`, `Common Table Expressions`, .
 
+### Resultsets Directory Overview
+
+- **Focus**: Comma seperated value (csv) files containing query outputs from `queries` directory.
+
