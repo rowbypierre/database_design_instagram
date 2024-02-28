@@ -1,5 +1,56 @@
 # Library Database Queries Overview
 
+
+## Time Series Analysis of Library's Loan Data
+Analyzes the number of loans per month and the growth percentage from the previous month.
+
+### With Clause
+The `WITH` clause creates a temporary result set (`x`) that is calculated as follows:
+- Extracts the `year` and `month` from `c.date` and labels them as `"Year"` and `"Month #"` respectively.
+- Retrieves the full month name and labels it as `"Month"`.
+- Determines the previous month number and labels it as `"Previous Month #"`.
+- Counts the number of loans per month and labels the result as `"Loans"`.
+
+### Main Select Clause
+The main query calculates:
+- The number of loans for each month labeled as `"# of Loans"`.
+- The growth percentage from the previous month, calculated and labeled as `"Growth (Prev. Month)"`.
+
+### SQL Query
+
+```sql
+-- time series analysis: # of loans per month & growth % from previous month
+with x as (
+	select 		date_part('year', c.date) "Year", 
+			date_part('month', c.date) "Month #", 
+			to_char(c.date, 'Month') "Month",
+			date_part('month', (c.date - interval '1 month')) "Previous Month #",
+			count(*) as "Loans"
+	from 		loans
+			join returns r on r.id = loans.return_id
+			join checkouts c on c.id = loans.checkout_id
+	group by 	date_part('year', c.date), date_part('month', c.date), 
+			date_part('month', (c.date - interval '1 month')), 
+			to_char(c.date, 'Month')
+	order by	"Year", "Month #" desc
+)
+
+select 	  "Year"
+	, "Month"
+	, "Loans" as "# of Loans"
+	, case
+		 when x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #") is null 
+			 then '0.00 %'
+		 else   
+			concat(
+				cast (((
+					round(((
+						cast(x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #") as numeric)) / x2."Loans"), 2) * 100)) as text), ' %')
+		end as "Growth (Prev. Month)"
+from		x as x2 
+; 
+```
+
 ## General Overview of Library's Book Collection
 Lists titles, ISBNs, genres, and conditions of books, sorted by genre and title.
 
