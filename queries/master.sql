@@ -7,6 +7,73 @@ from		books b
 		left join statuses s on s.id = b.status_id
 order by	Genre, Title;
 
+-- patron activity report 
+select 		l.patron_id "ID", concat(p.fname, ' ', p.lname) "Name"
+		, round(avg(fine), 2) "Fines (AVG)"
+		, count(comments_neg.id) "# Negative Comments"
+		, count(comments_pos.id) "# Positive Comments"
+		, count(overdue.id) "# Overdue Returns"
+		, count(early_returns.id) "# Early Returns"
+		, fav.genre "Favorite Genre"
+from 		loans l
+		left join 	patrons p on l.patron_id = p.id
+		left join 	( select 	fine, id from 	returns ) fines on fines.id = l.return_id
+		left join 	( select 	 id, comment
+				from 	returns 
+				where 	comment like '%late%'
+					or comment like '%damage%'
+					or comment like 'lost'
+					or comment like '%missing%' ) comments_neg  on comments_neg.id = l.return_id
+		left join 	( select 	id, comment
+				from 	returns 
+				where 	comment not like '%late%'
+					and comment not like '%damage%'
+					and comment not like '%lost%'
+					and comment not like '%missing%' ) comments_pos on comments_pos.id = l.return_id		
+		left join 	( select 	id, overdue from 	returns where 	overdue = true) overdue on overdue.id = l.return_id	
+		left join 	( select  id from returns where 	comment like '%early%' ) early_returns on early_returns.id = l.return_id	
+		left join 	( select 	patron_id, genre		
+				from		(select 	*, row_number() over(partition by patron_id, genre order by count desc) "copy"
+						from 		(select 	count(*) "count", patron_id, genre
+								from 		loans l
+										join books b on b.id = l.book_id
+										join genres g on g.id = b.genre_id 	
+										group by 	patron_id, genre) x) y
+where 		copy = 1 )fav on fav.patron_id = l.patron_id				
+group by  	l.patron_id, concat(p.fname, ' ', p.lname), fav.genre 
+order by 	"Favorite Genre", "ID";
+
+-- time series analysis: # of loans per month & growth % from previous month
+with x as (
+	select 			date_part('year', c.date) "Year", 
+				date_part('month', c.date) "Month #", 
+				to_char(c.date, 'Month') "Month",
+				date_part('month', (c.date - interval '1 month')) "Previous Month #",
+				count(*) as "Loans"
+	from 			loans
+				join returns r on r.id = loans.return_id
+				join checkouts c on c.id = loans.checkout_id
+	group by 		date_part('year', c.date), date_part('month', c.date), 
+				date_part('month', (c.date - interval '1 month')), 
+				to_char(c.date, 'Month')
+	order by		"Year", "Month #" desc
+)
+
+select 	  "Year"
+	, "Month"
+	, "Loans" as "# of Loans"
+	, case
+		 when x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #") is null 
+			 then '0.00 %'
+		 else   
+			 concat(
+				cast (((
+					round(((
+						cast(x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #") as numeric)) / x2."Loans"), 2) * 100)) as text), ' %')
+	end as "Growth (Prev. Month)"
+from	x as x2 
+; 
+
 -- list of available books and author information
 with x as (
 	select 		--*,
