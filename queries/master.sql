@@ -38,7 +38,7 @@ from 		loans l
 								from 		loans l
 										join books b on b.id = l.book_id
 										join genres g on g.id = b.genre_id 	
-										group by 	patron_id, genre) x) y
+								group by 	patron_id, genre) x) y
 where 		copy = 1 )fav on fav.patron_id = l.patron_id				
 group by  	l.patron_id, concat(p.fname, ' ', p.lname), fav.genre 
 order by 	"Favorite Genre", "ID";
