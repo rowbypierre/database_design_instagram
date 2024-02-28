@@ -40,6 +40,12 @@
   - Common Table Expressions (CTEs): Facilitates the breakdown of the complex query into simpler parts using the `WITH` clause.
   - Includes functions like `date_part`, `to_char`, `count`, `CASE`, Arithmetic operations, & `ORDER BY`clause. 
 
+#### Patron Activity Report
+- **Purpose**: Provides a comprehensive report on patron activities, including average fines, counts of negative and positive comments, overdue and early returns frequency, and identifies each patron's most borrowed genre.
+- **SQL Features**:
+    - Utilizes subqueries, aggregate functions, conditional expressions with `LIKE` & the `row_number()` window function,
+    - Multiple left joins, and `GROUP BY` & `ORDER BY` clauses to construct the report.
+
 #### Library's Book Collection
 - **Purpose**: Lists all books in the library's collection.
 - **Details**: Includes title, ISBN, genre, and condition.
