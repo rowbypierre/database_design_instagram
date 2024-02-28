@@ -38,12 +38,7 @@
 - **Purpose**: Analyzes trends in library loan data over time by calculating the number of loans per month and assessing the growth in loan numbers compared to the previous month.
 - **SQL Features**: 
   - Common Table Expressions (CTEs): Facilitates the breakdown of the complex query into simpler parts using the `WITH` clause.
-  - `date_part`: Extracts parts of a date (year and month in this context) from a given date column.
-  - `to_char`: Converts a date or timestamp to a string in a specified format, here used to extract the full month name.
-  - `count`: Aggregates the number of loans per grouped period (year and month).
-  - `CASE`: Handles conditional logic within the SQL query to calculate growth rates.
-  - Arithmetic operations: Perform the calculation of growth percentages.
-  - `ORDER BY`: Sorts the results by year and month for orderly presentation.
+  - Includes functions like `date_part`, `to_char`, `count`, `CASE`, Arithmetic operations, & `ORDER BY`clause. 
 
 #### Library's Book Collection
 - **Purpose**: Lists all books in the library's collection.
