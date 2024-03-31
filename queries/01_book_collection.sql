@@ -1,4 +1,4 @@
--- general overview of the library's book collection
+-- General overview of the library's book collection.
 select 		--*,
 			title 		"Title"
 			,ISBN 		"ISBN"
