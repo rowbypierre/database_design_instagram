@@ -1,5 +1,5 @@
 
--- average cost of fines by book genre
+-- Average cost of fines by book genre.
 with x as ( 
 	select 						*,
 			(r.date - l.due) 	"Days Overdue"
