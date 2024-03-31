@@ -1,4 +1,4 @@
--- list of available books and author information
+-- List of available books and author information.
 with x as (
 	select 		--*,
 				title  									"Book Title",
