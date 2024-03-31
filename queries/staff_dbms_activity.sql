@@ -1,4 +1,4 @@
--- staff count of records creations in database system
+-- Staff count of records creations in database system. 
 with x as (
 	select		created_staff_id "ID", case when 1=1 then 'Books' end as "Record Type"
 	from		books
@@ -19,7 +19,8 @@ with x as (
 	from		staff 			
 )
 
-select 		concat(s.fname, ' ', s.lname) "Name", count("Record Type") "Count"
+select 		concat(s.fname, ' ', s.lname) "Name"
+			,count("Record Type") "Count"
 from		x
 			join staff s on s.id = x."ID" 
 group by 	"Name"
