@@ -17,7 +17,7 @@ with x as (
 	left join 	checkouts c on c.id = l.checkout_id
 ) 
 
-select 		title "Book Title"
-			,("Return Date" - "Checkout Date") as "Days Loaned" 
+select 		title 									"Book Title"
+			,("Return Date" - "Checkout Date") as 	"Days Loaned" 
 from		x
 order by	"Days Loaned" desc;
