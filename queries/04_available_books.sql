@@ -17,3 +17,4 @@ select		x."Book Title",
 from 		x 
 group by 	x."Book Title"
 order by 	x."Book Title"
+

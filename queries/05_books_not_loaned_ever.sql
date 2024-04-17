@@ -1,4 +1,4 @@
--- List of available books and author information.
+-- List of books never loaned out. 
 with x as (
 	select 		--*,
 				title  									"Book Title",

@@ -1,4 +1,3 @@
-
 -- Average cost of fines by book genre.
 with x as ( 
 	select 						*,
@@ -15,3 +14,4 @@ from 		x
 where 		"Days Overdue" > 0
 group by	"Genre"
 order by	"Genre";
+

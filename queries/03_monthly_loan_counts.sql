@@ -26,7 +26,13 @@ select 		 	"Year"
 				 concat(
 					cast (((
 						round(((
-							cast(x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #") as numeric)) / x2."Loans"), 2) * 100)) as text), ' %')
+							cast(x2."Loans" 
+								- 
+								(select x."Loans" from x where x."Month #" = x2."Previous Month #") as numeric)) 
+								/ 
+								x2."Loans"), 2) 
+								* 
+								100)) as text), ' %')
 		end 	"Growth (Prev. Month)"
 from	x x2 
 ; 

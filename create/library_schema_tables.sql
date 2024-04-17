@@ -273,8 +273,8 @@ create table patrons (
 			and ((address is not null and length(zip) >= 5 and state is not null)
 				or (address is null and zip is null and state is null))	
 			and (modified is null or created <= modified)
-			-- and (coalesce((phone)::boolean::integer,0) + 
-				-- coalesce((email)::boolean::integer,0)) >= 1
+			and (coalesce((phone)::boolean::integer,0) + 
+				coalesce((email)::boolean::integer,0)) >= 1
 			and (phone is null or length(phone) >= 10)
 			and (email is null or email like '%@%')
 	)

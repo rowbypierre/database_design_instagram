@@ -28,6 +28,6 @@ with x as (
 select 		concat(s.fname, ' ', s.lname) "Name"
 			,count("Record Type") "Count"
 from		x
-			join staff s on s.id = x."ID" 
+join 		staff s on s.id = x."ID" 
 group by 	"Name"
 order by 	"Name";
