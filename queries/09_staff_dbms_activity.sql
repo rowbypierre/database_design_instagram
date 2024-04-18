@@ -31,5 +31,5 @@ select 		concat(s.fname, ' ', s.lname) 	"Staff Name"
             from		x
 join 		staff s on s.id = x."ID" 
 join        roles r on r.id = s.role_id
-group by 	1,2
+group by 	1, 2
 order by 	3 desc, 1;
