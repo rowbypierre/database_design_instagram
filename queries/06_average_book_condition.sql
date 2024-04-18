@@ -5,7 +5,7 @@ select 		condition                                               "Condition"
 					* 
 					100
 					/
-					(select count(*) from books)) , '% of Books')   "Percent"
+					(select count(*) from books)) , '% of Books')   "Percentage"
 from		books b
 left join 	conditions c on c.id = b.condition_id
 group by 	1

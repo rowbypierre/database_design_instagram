@@ -1,13 +1,13 @@
 -- General overview of the library's book collection.
 select 		--*,
-			b.title 		            "Title"
-			,b.ISBN 		            "ISBN"
+			b.title 		            "Book Title"
+			,b.ISBN 		            "Book ISBN"
             ,string_agg(concat(a.fname,
                              ' ',
                              upper(mi),
                              '. ',
                              a.lname) 
-                        ,', ')          "Author(s)"
+                        ,', ')          "Book Author(s)"
 			,g.genre 		            "Genre"
 			,c.condition 	            "Condition"
 from		books b

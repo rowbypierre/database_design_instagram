@@ -12,7 +12,7 @@ with x as (
 )
 
 select										x."Book Title",
-			string_agg("Full Name", ', ')  	"Author"			
+			string_agg("Full Name", ', ')  	"Author(s)"			
 from 		x 
 group by 	1
 order by 	1

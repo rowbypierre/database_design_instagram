@@ -2,9 +2,9 @@
 with x as ( 
 	select 	concat(p.fname, ' ', p.lname)  		"Patron",
 			b.title 							"Book",
-			c.date 								"Checkout",
-			l.due 								"Due",
-			r.date 								"Returned",
+			c.date 								"Checkout Date",
+			l.due 								"Due Date",
+			r.date 								"Return Date",
 			(r.date - l.due) 					"Days Overdue",
 			concat('$',r.fine) 					"Fine"
 	from 	loans l
