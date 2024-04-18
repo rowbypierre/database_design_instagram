@@ -12,6 +12,5 @@ select 		genre 								"Genre"
 			,concat('$', round(avg (fine), 2)) 	"Fine (AVG)"
 from 		x 
 where 		"Days Overdue" > 0
-group by	"Genre"
-order by	"Genre";
-
+group by	1
+order by	1;

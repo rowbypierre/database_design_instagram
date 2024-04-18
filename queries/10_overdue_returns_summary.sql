@@ -17,4 +17,4 @@ with x as (
 select 		* 
 from 		x 
 where 		"Days Overdue" > 0
-order by	"Days Overdue" desc;
+order by	6 desc;

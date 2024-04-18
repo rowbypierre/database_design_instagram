@@ -20,4 +20,4 @@ with x as (
 select 		title 									"Book Title"
 			,("Return Date" - "Checkout Date") as 	"Days Loaned" 
 from		x
-order by	"Days Loaned" desc;
+order by	2 desc;

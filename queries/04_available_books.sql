@@ -12,9 +12,8 @@ with x as (
 	order by 	"Book Title"
 )
 
-select		x."Book Title",
-			string_agg("Full Name", ', ') as Author			
+select		                                x."Book Title",
+			string_agg("Full Name", ', ')   "Author"			
 from 		x 
-group by 	x."Book Title"
-order by 	x."Book Title"
-
+group by 	1
+order by 	1
