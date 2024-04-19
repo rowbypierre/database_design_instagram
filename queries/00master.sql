@@ -201,23 +201,23 @@ with x as (
 	select		created_staff_id                    "ID", 
 				case when 1=1 then 'Books' end 		"Record Type"
 	from		books
-	union
+	union all
 	select		created_staff_id                    "ID", 
 				case when 1=1 then 'Checkouts' end	"Record Type"
 	from		checkouts
-	union
+	union all
 	select		created_staff_id                    "ID", 
 				case when 1=1 then 'Loans' end		"Record Type"
 	from		loans
-	union
+	union all
 	select		created_staff_id                    "ID", 
 				case when 1=1 then 'Patrons' end  	"Record Type"
 	from		patrons
-	union
+	union all
 	select		created_staff_id                    "ID", 
 				case when 1=1 then 'Returns' end  	"Record Type"
 	from		returns
-	union
+	union all
 	select		created_staff_id                    "ID", 
 				case when 1=1 then 'Staff' end		"Record Type"
 	from		staff 			
