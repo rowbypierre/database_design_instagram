@@ -1,4 +1,4 @@
-"ID","Name","Fines (AVG)","# Negative Comments","# Positive Comments","# Overdue Returns","# Early Returns","Favorite Genre"
+"Patron ID","Patron Name","Fines (AVG)","# Negative Comments","# Positive Comments","# Overdue Returns","# Early Returns","Favorite Genre"
 7,"David Brown","0.50","1","0","1","0","Art"
 23,"Tyler Garcia","5.00","0","1","1","0","Art"
 12,"Ivy Lee","0.00","0","1","0","0","Biography"
