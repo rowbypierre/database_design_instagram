@@ -18,6 +18,7 @@ with x as (
 ) 
 
 select 		title 									"Book Title"
-			,("Return Date" - "Checkout Date") as 	"Days Loaned" 
+			,("Return Date" - "Checkout Date")  	"Days Loaned" 
+            ,("Return Date" - "Checkout Date")/30   "Months Loaned"
 from		x
 order by	2 desc;

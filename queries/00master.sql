@@ -99,8 +99,7 @@ select 		 	    "Year"
 								* 
 								100)) as text), ' %')
 		end 	"Growth (Prev. Month)"
-from	x x2 
-; 
+from	x x2 ; 
 
 -- List of available books and author information.
 with x as (
@@ -122,24 +121,6 @@ from 		x
 group by 	1
 order by 	1;
 	
--- List of available books and author information.
-with x as (
-	select 		--*,
-				title  									"Book Title",
-				concat(fname,' ', mi, '. ', lname)  	"Full Name"
-	from 		book_authors  ba
-	left join 	authors a on ba.author_id = a.id
-	left join 	books b on ba.book_id = b.id 
-	left join 	statuses s on b.status_id = s.id
-	where 		b.id not in (select book_id from loans)
-	order by 	"Book Title"
-)
-
-select										x."Book Title",
-			string_agg("Full Name", ', ')  	Author			
-from 		x 
-group by 	x."Book Title"
-order by 	x."Book Title"
 
 -- List of books never loaned out. 
 with x as (
@@ -193,7 +174,8 @@ with x as (
 ) 
 
 select 		title 									"Book Title"
-			,("Return Date" - "Checkout Date") as 	"Days Loaned" 
+			,("Return Date" - "Checkout Date")  	"Days Loaned" 
+            ,("Return Date" - "Checkout Date")/30   "Months Loaned"
 from		x
 order by	2 desc;
 
@@ -212,7 +194,7 @@ select 		genre 								"Genre"
 from 		x 
 where 		"Days Overdue" > 0
 group by	1
-order by	1;
+order by	2 desc;
 
 -- Staff count of records creations in database system. 
 with x as (
@@ -244,13 +226,13 @@ with x as (
 select 		concat(s.fname, ' ', s.lname) 	"Staff Name"
             ,r.role                         "Position/ Title"
             ,count(2) 			            "Record(s) Created"
+            ,s.hire                         "Onboard Date"
             from		x
 join 		staff s on s.id = x."ID" 
 join        roles r on r.id = s.role_id
-group by 	1, 2
+group by 	1, 2, 4
 order by 	3 desc, 1;
 
--- Overdue returns. 
 -- Overdue returns. 
 with x as ( 
 	select 	concat(p.fname, ' ', p.lname)  		"Patron",
