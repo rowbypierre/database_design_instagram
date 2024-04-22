@@ -19,16 +19,15 @@ select 		 	    "Year"
 			 when x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #") is null 
 				 then '0.00 %'
 			 else   
-				 concat(
-					cast (((
-						round(((
-							cast(x2."Loans" 
-								- 
-								(select x."Loans" from x where x."Month #" = x2."Previous Month #") as numeric)) 
-								/ 
-								x2."Loans"), 2) 
-								* 
-								100)) as text), ' %')
+				 concat(((
+                     round(((
+                            (x2."Loans" - (select x."Loans" from x where x."Month #" = x2."Previous Month #"))::numeric
+                            / 
+                            (select x."Loans" from x where x."Month #" = x2."Previous Month #")::numeric) 
+                            ), 2) 
+                            * 
+                            100)), ' %')
 		end 	"Growth (Prev. Month)"
+        , sum("Loans") over(order by (select extract(month from to_date(x2."Month", 'Month') ))) "Running Total"  
 from	x x2 
 ; 
